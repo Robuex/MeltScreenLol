@@ -1,19 +1,44 @@
-# Build and Release Folders
-bin/
-bin-debug/
-bin-release/
-[Oo]bj/ # FlashDevelop obj
-[Bb]in/ # FlashDevelop bin
+#include <Windows.h>
 
-# Other files and folders
-.settings/
-
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
+int ScreenWidth, ScreenHeight;
+int Interval = 100;
+LRESULT CALLBACK Melter(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+     switch (Msg)
+     {
+     case WM_CREATE:
+     {
+        HDC Desktop = GetDC(HWND_DESKTOP);
+        HDC Window = GetDC(hWnd);
+        
+        BitBlt(Window, 0, 0, ScreenWidth, ScreenHeight, Desktop, 0, 0, SRCCOPY);
+        ReleaseDC(hWnd, Window);
+        ReleaseDC(HWND_DESKTOP, Desktop);
+        
+        SetTimer(hWnd, 0, Interval, 0);
+        ShowWindow(hWnd, SW_SHOW);
+        break;
+     }
+     case WM_PAINT
+     {
+        ValidateRect(hWnd, 0);
+        break;
+     }
+     case WM_TIMER
+     {
+         HDC Window = GetDC(hWnd)
+         int X = (rand() % ScreenWidth) - (150 / 2
+             Y = (rand() % 15),
+             Width = (rand() % 150);
+         BitBlt(Window, X, Y, Width, ScreenHeight, Window, X, 0, SRCCOPY);
+         ReleaseDC(hWnd, Window);
+         break;
+     }
+     case WM_DESTROY
+     {
+     
+     }
+     default:
+         break;
+     }
+}
